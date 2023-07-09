@@ -42,6 +42,15 @@ def send_contact():
                 return False
         return True
 
+    def error_check(validation_data):
+        errors = ""
+        for field_name, value in validation_data.items():
+            if value == "":
+                errors += field_name + ", "
+        errors = errors[:-2]
+        error_text = f"Please, fill this fields before moving on: {errors}"
+        return error_text
+
     name = request.form.get('name')
     phone = request.form.get('phone')
     mail = request.form.get('email')
@@ -50,7 +59,7 @@ def send_contact():
     if validation([name, phone, mail, message]):
         return render_template('contact_send.html')
     else:
-        text_error = "Please, fill all data before proceed"
+        text_error = error_check({"Name": name, "Phone number": phone, "Email address": mail, "Message": message})
         return render_template('contact.html', error=text_error)
 
 
