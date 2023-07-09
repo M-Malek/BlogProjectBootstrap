@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 import os
 
@@ -31,7 +31,27 @@ def about():
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", error="")
+
+
+@app.route('/send_contact', methods=["POST"])
+def send_contact():
+    def validation(query):
+        for entry in query:
+            if entry == "":
+                return False
+        return True
+
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    mail = request.form.get('email')
+    message = request.form.get('message')
+
+    if validation([name, phone, mail, message]):
+        return render_template('contact_send.html')
+    else:
+        text_error = "Please, fill all data before proceed"
+        return render_template('contact.html', error=text_error)
 
 
 @app.route("/post/<int:post_id>")
@@ -39,3 +59,7 @@ def render_post(post_id):
     all_data = render_data()
     post = all_data[post_id]
     return render_template("post.html", post=post)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
