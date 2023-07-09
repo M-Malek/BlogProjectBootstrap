@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 import requests
+import os
 
 
 app = Flask(__name__)
-
+env_config = os.getenv("PROD_APP_SETTINGS", "config.DevelopmentConfig")
+app.config.from_object(env_config)
 
 def render_data():
     url = "https://api.npoint.io/d12847198b94a4df5e11"
