@@ -26,6 +26,7 @@ def send_email_to_me(message):
     con.starttls()
     con.login(user=mail_address, password=password)
     con.sendmail(from_addr=mail_address, to_addrs=mail_address, msg=message)
+    con.close()
 
 
 @app.route("/")
@@ -84,7 +85,3 @@ def render_post(post_id):
     all_data = render_data()
     post = all_data[post_id]
     return render_template("post.html", post=post)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
