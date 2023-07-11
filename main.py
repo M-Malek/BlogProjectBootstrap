@@ -72,9 +72,9 @@ def send_contact():
     message = request.form.get('message')
 
     if validation([name, phone, mail, message]):
-        await send_email_to_me(f"Message from: {name}, message text: {mail} \n "
-                               f"Contact to {name}: phone: {phone}, email: {mail}")
-        return render_template('contact_send.html')
+        return render_template('contact_send.html'), send_email_to_me(f"Message from: {name}, message text: {mail} \n "
+                                                                      f"Contact to {name}: phone: {phone}, "
+                                                                      f"email: {mail}")
     else:
         text_error = error_check({"Name": name, "Phone number": phone, "Email address": mail, "Message": message})
         return render_template('contact.html', error=text_error)
