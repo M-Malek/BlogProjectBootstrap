@@ -1,7 +1,7 @@
 # M-Malek Capstone Project - Blog with Bootstrap
 
 ## Description
-Simple blog crated during 100 Days of Code challange
+Simple blog created during 100 Days of Code challange
 
 
 ## Site
