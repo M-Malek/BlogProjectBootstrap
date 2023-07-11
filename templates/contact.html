@@ -37,7 +37,9 @@
                         <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
                         <div class="my-5">
                             {% if error != "" %}
-                                <h5>{{ error }}</h5>
+                                <div class="alert alert-warning" role="alert">
+                                    <h5>{{ error }}</h5>
+                                </div>
                             {% endif %}
                             <form id="contactForm" action="{{url_for('send_contact')}}" method="post">
                                 <div class="form-floating">

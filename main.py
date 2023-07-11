@@ -72,8 +72,8 @@ def send_contact():
     message = request.form.get('message')
 
     if validation([name, phone, mail, message]):
-        send_email_to_me(f"Message from: {name}, message text: {mail} \n "
-                         f"Contact to {name}: phone: {phone}, email: {mail}")
+        await send_email_to_me(f"Message from: {name}, message text: {mail} \n "
+                               f"Contact to {name}: phone: {phone}, email: {mail}")
         return render_template('contact_send.html')
     else:
         text_error = error_check({"Name": name, "Phone number": phone, "Email address": mail, "Message": message})
