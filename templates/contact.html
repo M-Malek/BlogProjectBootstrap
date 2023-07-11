@@ -38,7 +38,7 @@
                         <div class="my-5">
                             {% if error != "" %}
                                 <div class="alert alert-warning" role="alert">
-                                    <h5>{{ error }}</h5>
+                                    <p>{{ error }}</p>
                                 </div>
                             {% endif %}
                             <form id="contactForm" action="{{url_for('send_contact')}}" method="post">
