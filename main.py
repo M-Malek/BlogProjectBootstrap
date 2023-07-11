@@ -22,11 +22,10 @@ def send_email_to_me(message):
     password = os.getenv("mailPassword")
 
     # Start connection with mail and log in user:
-    con = smtplib.SMTP('smtp.gmail.com')
-    con.starttls()
-    con.login(user=mail_address, password=password)
-    con.sendmail(from_addr=mail_address, to_addrs=mail_address, msg=message)
-    con.close()
+    with smtplib.SMTP('smtp.gmail.com') as con:
+        con.starttls()
+        con.login(user=mail_address, password=password)
+        con.sendmail(from_addr=mail_address, to_addrs=mail_address, msg=message)
 
 
 @app.route("/")
