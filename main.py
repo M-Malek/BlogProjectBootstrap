@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
 import os
+import smtplib
 
 
 app = Flask(__name__)
@@ -9,9 +10,22 @@ app.config.from_object(env_config)
 
 
 def render_data():
+    """Download simple test post data"""
     url = "https://api.npoint.io/d12847198b94a4df5e11"
     raw_data = requests.get(url).json()
     return raw_data
+
+
+def send_email_to_me(message):
+    """Send email to me"""
+    mail_address = os.getenv('mailaddress')
+    password = os.getenv("mailPassword")
+
+    # Start connection with mail and log in user:
+    con = smtplib.SMTP('smtp.gmail.com')
+    con.starttls()
+    con.login(user=mail_address, password=password)
+    con.sendmail(from_addr=mail_address, to_addrs=mail_address, msg=message)
 
 
 @app.route("/")
@@ -57,6 +71,8 @@ def send_contact():
     message = request.form.get('message')
 
     if validation([name, phone, mail, message]):
+        send_email_to_me(f"Message from: {name}, message text: {mail} \n "
+                         f"Contact to {name}: phone: {phone}, email: {mail}")
         return render_template('contact_send.html')
     else:
         text_error = error_check({"Name": name, "Phone number": phone, "Email address": mail, "Message": message})
